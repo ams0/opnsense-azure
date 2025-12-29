@@ -1,0 +1,22 @@
+---
+- name: Manage OPNsense Firewall
+  hosts: firewalls
+  connection: local
+  gather_facts: false
+  
+  module_defaults:
+    group/oxlorg.opnsense.all:
+      firewall: "{{ ansible_host }}"
+      api_key: "{{ opnsense_api_key }}"
+      api_secret: "{{ opnsense_api_secret }}"
+      ssl_verify: "{{ opnsense_ssl_verify }}"
+
+  tasks:
+    - name: Create an example alias
+      oxlorg.opnsense.alias:
+        name: 'ANSIBLE_TEST_ALIAS'
+        content: ['1.1.1.1', '8.8.8.8']
+        description: 'Created via Ansible'
+        state: present
+
+    # Add more tasks here using modules from oxlorg.opnsense collection
